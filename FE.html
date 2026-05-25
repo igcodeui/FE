@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Encore Group - Interactive Script</title>
+    <!-- Tailwind CSS for modern aesthetic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700 py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
+                <h1 class="text-xl font-bold tracking-wide text-white">THE ENCORE GROUP</h1>
+            </div>
+            <div class="text-sm text-gray-400 bg-gray-900 px-3 py-1 rounded border border-gray-700">
+                Live Agent Portal
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Columns: Dynamic Script Steps -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- STEP 1: Introduction -->
+            <div id="step-1" class="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 1</span>
+                    <h2 class="text-lg font-semibold text-white">Introduction & Verification</h2>
+                </div>
+                
+                <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded mb-4 text-gray-200 leading-relaxed">
+                    "Hi <span class="text-blue-400 font-semibold uppercase font-mono">[Client]</span>, this is <span class="text-blue-400 font-semibold uppercase font-mono">[Agent]</span> with The Encore Group — I’m going to be taking care of you today. I want to let you know you’re in good hands. We’ve helped thousands of families with life insurance, and I’m committed helping you find the best and most affordable coverage for your needs today."
+                    <br><br>
+                    "Before anything, I have your callback number as <span class="text-yellow-400 font-mono font-bold" id="script-phone-display">[NUMBER]</span> — is that correct?"
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1 font-medium">Callback Number Verification</label>
+                        <input type="text" id="input-phone" placeholder="Confirm phone number..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500 font-mono">
+                    </div>
+                </div>
+
+                <hr class="border-gray-700 my-4">
+
+                <p class="text-sm text-gray-300 mb-3 font-medium">"To get started, are we looking at coverage for yourself, or for someone else?"</p>
+                <div class="flex gap-4">
+                    <button onclick="selectPath('self')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        🙋‍♂️ For Self
+                    </button>
+                    <button onclick="selectPath('loved-one')" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        ❤️ For a Loved One
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2A: Option Self -->
+            <div id="step-2-self" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 2: Self</span>
+                    <h2 class="text-lg font-semibold text-white">Coverage History</h2>
+                </div>
+                <p class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded mb-4 text-gray-200">
+                    "Have you had any life insurance before, or would this be your first policy?"
+                </p>
+                <div class="flex gap-4">
+                    <button onclick="setExistingInsurance(true)" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                        Yes, Has Existing Policy
+                    </button>
+                    <button onclick="setExistingInsurance(false)" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                        No, This is First Policy
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2B: Option Loved One -->
+            <div id="step-2-loved-one" class="hidden bg-gray-800 border border-purple-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-purple-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 2: Loved One</span>
+                    <h2 class="text-lg font-semibold text-white">Loved One Details</h2>
+                </div>
+                <p class="bg-gray-900 border-l-4 border-purple-500 p-4 rounded mb-4 text-gray-200">
+                    "I love that. What’s their name, and do they currently have any coverage in place right now?"
+                </p>
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Loved One's Name</label>
+                        <input type="text" id="input-loved-name" placeholder="Enter name..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="setExistingInsurance(true)" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                        Yes, They Have Insurance
+                    </button>
+                    <button onclick="setExistingInsurance(false)" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                        No, They Have No Insurance
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Existing Coverage Review -->
+            <div id="step-3-existing" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-amber-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 3</span>
+                    <h2 class="text-lg font-semibold text-white">Existing Coverage Review</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">1. "How much coverage do you currently have?"</p>
+                        <input type="text" id="input-ext-amount" placeholder="$ Amount" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">2. "And what’s your monthly payment?"</p>
+                        <input type="text" id="input-ext-payment" placeholder="$ Premium / month" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">3. "Is that a term policy or whole life?"</p>
+                        <select id="input-ext-type" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            <option value="">-- Select --</option>
+                            <option value="Term">Term Policy</option>
+                            <option value="Whole Life">Whole Life</option>
+                        </select>
+                    </div>
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">4. "What was the original reason for getting the coverage — mainly burial expenses, income protection, or leaving money behind for family?"</p>
+                        <input type="text" id="input-ext-reason" placeholder="Reason stated..." class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+
+                    <div class="bg-blue-950/40 border border-blue-800/60 p-4 rounded text-gray-200 mt-4">
+                        "Got it. A lot of people I speak with already have something in place, but after reviewing it, they realize they may be undercovered or paying too much. Let me ask a few quick questions so I can see whether we can improve your situation or lower the cost."
+                    </div>
+                    <button onclick="showQualifying()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        Continue to Qualifying Questions →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: No Insurance Intro -->
+            <div id="step-3-clean" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 3</span>
+                    <h2 class="text-lg font-semibold text-white">Establishing Need</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">1. "Are you married?"</p>
+                        <input type="text" id="input-married" placeholder="Family status..." class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-300 font-medium mb-2">2. "Do you have children or anyone who depends on you financially?"</p>
+                        <input type="text" id="input-dependents" placeholder="Dependents info..." class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+                    <div class="bg-gray-950/60 border-l-4 border-green-500 p-4 rounded text-gray-200">
+                        "The reason I ask is because life insurance isn’t really for us — it’s for the people we leave behind."
+                    </div>
+                    <button onclick="showQualifying()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        Continue to Qualifying Questions →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 5: Qualifying Matrix -->
+            <div id="step-4-qualifying" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 4</span>
+                    <h2 class="text-lg font-semibold text-white">Qualifying Metrics</h2>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">"To see what programs you qualify for, I just need to get some basic information:"</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Date of Birth</label>
+                        <input type="date" id="input-dob" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Height / Weight</label>
+                        <input type="text" id="input-ht-wt" placeholder="e.g. 5'10 / 180 lbs" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Any Major Medical Conditions?</label>
+                        <textarea id="input-medical" placeholder="Heart disease, stroke, cancer, diabetes, etc..." rows="2" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Tobacco / Nicotine Use?</label>
+                        <select id="input-tobacco" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Employment / Occupation</label>
+                        <input type="text" id="input-work" placeholder="Working, Retired, Disability..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Rough Monthly Income</label>
+                        <input type="text" id="input-income" placeholder="e.g. $3,500" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Checking Account Holder?</label>
+                        <select id="input-checking" onchange="toggleBankInput()" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div id="bank-name-wrapper" class="md:col-span-2 bg-gray-950 p-3 rounded border border-gray-800">
+                        <p class="text-sm text-gray-300 mb-2">"Do you manage your own finances and have a checking account?"</p>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Bank Name (For Discount Lookup)</label>
+                        <input type="text" id="input-bank" placeholder="e.g. Wells Fargo, Chase..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                </div>
+
+                <button onclick="showBurial()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow mt-6">
+                    Continue to Burial Costs →
+                </button>
+            </div>
+
+            <!-- STEP 6: Burial Cost Conversation -->
+            <div id="step-5-burial" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 5</span>
+                    <h2 class="text-lg font-semibold text-white">Burial & Cost Impact</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 p-4 rounded border border-gray-700">
+                        <p class="text-gray-200 mb-2">"Now, have you given any thought to whether you’d want a traditional burial or cremation?"</p>
+                        <div class="flex gap-3">
+                            <label class="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded border border-gray-700 cursor-pointer flex-1">
+                                <input type="radio" name="burial-pref" value="Burial" class="text-blue-500">
+                                <span>Traditional Burial</span>
+                            </label>
+                            <label class="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded border border-gray-700 cursor-pointer flex-1">
+                                <input type="radio" name="burial-pref" value="Cremation" class="text-blue-500">
+                                <span>Cremation</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-4 rounded border border-gray-700">
+                        <p class="text-gray-200 mb-2">"And do you happen to know what that usually costs in <span class="text-yellow-400 font-bold uppercase font-mono" id="script-state-display">[State]</span>?"</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Client's State</label>
+                                <input type="text" id="input-state" placeholder="e.g. Texas, California..." class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">State Average Cost</label>
+                                <input type="text" id="input-cost-amount" placeholder="e.g. $10,000" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="toggleCostRebuttal(true)" class="flex-1 text-xs bg-amber-600/30 text-amber-300 border border-amber-600/50 py-1.5 rounded">Client Does Not Know</button>
+                            <button onclick="toggleCostRebuttal(false)" class="flex-1 text-xs bg-gray-700 text-gray-300 py-1.5 rounded">Client Knows Cost</button>
+                        </div>
+                    </div>
+
+                    <div id="cost-rebuttal-box" class="hidden bg-gray-950 border-l-4 border-amber-500 p-4 rounded space-y-3">
+                        <p class="text-gray-200 text-sm">
+                            "Just so you know, in <span class="text-yellow-400 font-medium" id="reb-state">[State]</span>, the average funeral cost is around <span class="text-yellow-400 font-medium" id="reb-cost">[AMOUNT]</span>. Between the funeral home, transportation, service, cemetery, or cremation costs — it adds up very quickly."
+                        </p>
+                        <p class="text-gray-200 text-sm font-medium">
+                            "So if something unexpected happened tomorrow, how would <span class="text-blue-400 uppercase font-mono font-bold" id="script-bene-display">[Beneficiary]</span> realistically come up with that money?"
+                        </p>
+                        <p class="text-gray-400 text-xs italic">
+                            "Would they need to borrow it, use credit cards, or ask family members for help?"
+                        </p>
+                    </div>
+
+                    <div class="bg-blue-950/40 p-4 rounded border border-blue-900 text-sm text-gray-200">
+                        "That’s exactly what we’re here to prevent — making sure your family isn’t left financially stressed while still keeping this affordable for you."
+                    </div>
+
+                    <button onclick="showBudget()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow mt-2">
+                        Continue to Budget Framing →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 7: Budget & Screening Setup -->
+            <div id="step-6-budget" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 6</span>
+                    <h2 class="text-lg font-semibold text-white">Budget & Pitch</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <p class="text-gray-200">"What’s a comfortable monthly range for you? Would you say closer to:"</p>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="selectBudget('$50/month')" class="bg-gray-900 hover:bg-gray-700 border border-gray-700 p-3 rounded text-center text-white font-medium transition-all focus:ring-2 focus:ring-blue-500">$50/mo</button>
+                        <button onclick="selectBudget('$100/month')" class="bg-gray-900 hover:bg-gray-700 border border-gray-700 p-3 rounded text-center text-white font-medium transition-all focus:ring-2 focus:ring-blue-500">$100/mo</button>
+                        <button onclick="selectBudget('$200/month')" class="bg-gray-900 hover:bg-gray-700 border border-gray-700 p-3 rounded text-center text-white font-medium transition-all focus:ring-2 focus:ring-blue-500">$200/mo</button>
+                    </div>
+                    <input type="text" id="custom-budget" placeholder="Or enter custom specific range..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+
+                    <p class="text-gray-300 bg-gray-950 p-3 rounded text-sm italic border border-gray-800">
+                        "Perfect. I’ll work within that range and find you the best value possible."
+                    </p>
+
+                    <div class="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 border border-blue-700 p-4 rounded text-gray-100">
+                        <span class="text-xs uppercase bg-blue-600 font-bold px-2 py-0.5 rounded tracking-wide mb-2 inline-block">The Encore Difference</span>
+                        <p class="text-sm leading-relaxed">
+                            "Here’s what makes us different — <strong>I shop over 100 carriers at once</strong>, so the companies compete for your business. My job is simply to find you the best coverage at the best rate you qualify for."
+                        </p>
+                    </div>
+
+                    <button onclick="showHealth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        Proceed to Medical Underwriting →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 8: Deep Underwriting Screening -->
+            <div id="step-7-health" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-red-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 7</span>
+                    <h2 class="text-lg font-semibold text-white">Medical & Prescription Screening</h2>
+                </div>
+                <p class="text-xs text-gray-400 mb-4">"Now I just need to ask a few health questions."</p>
+
+                <div class="space-y-3">
+                    <!-- Checkbox items for quick ticking during script delivery -->
+                    <label class="flex items-start space-x-3 bg-gray-900 p-2.5 rounded border border-gray-700 cursor-pointer">
+                        <input type="checkbox" class="mt-1 text-red-500 focus:ring-0 rounded bg-gray-800 border-gray-700">
+                        <span class="text-sm text-gray-200">Heart disease, heart attack, stroke, cancer, or diabetes?</span>
+                    </label>
+                    <label class="flex items-start space-x-3 bg-gray-900 p-2.5 rounded border border-gray-700 cursor-pointer">
+                        <input type="checkbox" class="mt-1 text-red-500 focus:ring-0 rounded bg-gray-800 border-gray-700">
+                        <span class="text-sm text-gray-200">ALS, MS, Hepatitis A/B/C, COPD, CHF, HIV/AIDS?</span>
+                    </label>
+                    <label class="flex items-start space-x-3 bg-gray-900 p-2.5 rounded border border-gray-700 cursor-pointer">
+                        <input type="checkbox" class="mt-1 text-red-500 focus:ring-0 rounded bg-gray-800 border-gray-700">
+                        <span class="text-sm text-gray-200">Anxiety, depression, sleep apnea, high blood pressure, or cholesterol?</span>
+                    </label>
+                    <label class="flex items-start space-x-3 bg-gray-900 p-2.5 rounded border border-gray-700 cursor-pointer">
+                        <input type="checkbox" class="mt-1 text-red-500 focus:ring-0 rounded bg-gray-800 border-gray-700">
+                        <span class="text-sm text-gray-200">Any hospitalizations within the last 2 years?</span>
+                    </label>
+                    <label class="flex items-start space-x-3 bg-gray-900 p-2.5 rounded border border-gray-700 cursor-pointer">
+                        <input type="checkbox" class="mt-1 text-red-500 focus:ring-0 rounded bg-gray-800 border-gray-700">
+                        <span class="text-sm text-gray-200">Any oxygen uses or dialysis?</span>
+                    </label>
+
+                    <div class="grid grid-cols-1 gap-3 pt-2">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">What medications are you currently taking?</label>
+                            <input type="text" id="input-meds" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">When was your last physical and how did it go?</label>
+                            <input type="text" id="input-physical" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white">
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-950 p-3 rounded border border-gray-800 space-y-2 mt-4">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Lifestyle Verification</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center space-x-2"><input type="checkbox"> <span>Marijuana Use</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox"> <span>Felonies/Misdemeanors (5yrs)</span></label>
+                            <label class="flex items-center space-x-2 md:col-span-2"><input type="checkbox"> <span>Ever declined/postponed before</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Authorization Box -->
+                    <div class="bg-red-950/30 border border-red-900/60 p-4 rounded space-y-3 mt-4">
+                        <p class="text-sm text-gray-200 font-medium">
+                            "To make sure I’m getting accurate approvals and the best pricing, do you mind if I run a quick prescription check? I’ll need your Social Security Number"
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Social Security Number</label>
+                                <input type="password" id="input-ssn" placeholder="XXX-XX-XXXX" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white font-mono tracking-widest">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Birth State</label>
+                                <input type="text" id="input-birth-state" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Current Full Address</label>
+                                <input type="text" id="input-address" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Beneficiary Full Name & Relationship</label>
+                                <input type="text" id="input-beneficiary" placeholder="e.g. Jane Doe (Wife)" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-white">
+                            </div>
+                            <div>
+                                <label class="flex items-center space-x-2 mt-2">
+                                    <input type="checkbox" id="input-bankruptcy">
+                                    <span class="text-xs text-gray-300">Ever filed bankruptcy?</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="showClosing()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow">
+                        Run Carrier Comparison Match →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 9: Closing & Rate Comparison -->
+            <div id="step-8-close" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 8</span>
+                    <h2 class="text-lg font-semibold text-white">Rate Shopping & Close</h2>
+                </div>
+
+                <div class="bg-gray-900 p-3 rounded text-sm text-gray-300 mb-4 border border-gray-700">
+                    "Excellent. Give me about 1–2 minutes while I compare rates from all the carriers and see which company gives you the best approval and pricing."
+                </div>
+
+                <!-- Live Plan Configurator -->
+                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-4 mb-4">
+                    <p class="text-xs font-bold text-blue-400 tracking-wider uppercase">Live Selected Offer Configuration</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Matched Carrier</label>
+                            <input type="text" id="input-carrier" placeholder="e.g. Mutual of Omaha" oninput="updateCloseScript()" class="w-full bg-gray-900 border border-gray-700 rounded px-2.5 py-1 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Face Amount ($)</label>
+                            <input type="text" id="input-face" placeholder="e.g. 15,000" oninput="updateCloseScript()" class="w-full bg-gray-900 border border-gray-700 rounded px-2.5 py-1 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Monthly Premium ($)</label>
+                            <input type="text" id="input-price" placeholder="e.g. 62.50" oninput="updateCloseScript()" class="w-full bg-gray-900 border border-gray-700 rounded px-2.5 py-1 text-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carrier pitch elements -->
+                <div class="space-y-3 bg-gray-900/60 p-4 rounded-lg border border-gray-700 text-sm mb-4">
+                    <p class="font-medium text-white">"Here’s why I like <span class="text-green-400 font-bold font-mono" id="script-carrier-name">[CARRIER]</span> specifically for you:"</p>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-300 text-xs">
+                        <li>They’re A-rated financially</li>
+                        <li>A+ with the BBB</li>
+                        <li>Over 100 years in business</li>
+                        <li>Millions of policyholders nationwide</li>
+                    </ul>
+                    <p class="font-medium text-white pt-2">"This policy includes:"</p>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-300 text-xs">
+                        <li>Locked-in pricing that never increases</li>
+                        <li>Guaranteed death benefit</li>
+                        <li>Tax-free payout to your beneficiary</li>
+                        <li>Living benefits if diagnosed terminally ill</li>
+                        <li>And the policy can endow, meaning you may receive the full value back later in life"</li>
+                    </ul>
+                </div>
+
+                <!-- Final Pitch Delivery Box -->
+                <div class="bg-green-950/40 border border-green-800 p-4 rounded-lg text-gray-200 mb-4">
+                    "For <span class="text-green-400 font-bold" id="script-face-val">[FACE AMOUNT]</span> in coverage, the best rate available is only $<span class="text-green-400 font-bold" id="script-price-val">[PRICE]</span> per month."
+                    <br><br>
+                    "You mentioned earlier that around <span class="text-yellow-400 font-bold" id="script-budget-target">[BUDGET]</span> felt comfortable, and we’re right within that range."
+                    <br><br>
+                    <strong>"Let’s go ahead and lock this in for you today."</strong>
+                </div>
+
+                <!-- Handling Objections Triggers -->
+                <div class="bg-gray-950 p-3 rounded border border-gray-800 text-xs space-y-2">
+                    <span class="text-amber-400 font-semibold uppercase tracking-wider block">🚨 Price Objection Safeguard Routine</span>
+                    <p class="text-gray-400 italic">"I completely understand. What we can do is slightly adjust the coverage amount to fit your comfort zone today, and later on you can always increase the coverage. The important thing is getting you protected now while you qualify."</p>
+                </div>
+
+                <button onclick="showPayment()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded transition-colors shadow mt-4">
+                    Proceed to Payment & Banking Setup →
+                </button>
+            </div>
+
+            <!-- STEP 10: Payment Setup & Transfer -->
+            <div id="step-9-payment" class="hidden bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm transition-all">
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-purple-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 9</span>
+                    <h2 class="text-lg font-semibold text-white">Payment & Warm Transfer</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p class="text-gray-200 mb-2">"When do you usually get paid?"</p>
+                        <input type="text" id="input-payday" placeholder="e.g. 1st and 15th, every Friday..." class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white">
+                    </div>
+                    
+                    <p class="text-sm text-gray-300 italic px-1">
+                        "We can either start the policy today or set the draft date for a day that works best for your schedule."
+                    </p>
+
+                    <div class="bg-gray-900 p-4 rounded border border-gray-700 space-y-3">
+                        <p class="text-sm text-gray-200">
+                            "I’ll need your routing and account number. The carriers use bank drafts because it prevents the policy from lapsing due to expired debit or credit cards. That’s just me making sure your coverage stays active."
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Routing Number</label>
+                                <input type="text" id="input-routing" placeholder="9 digits" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Account Number</label>
+                                <input type="text" id="input-account" class="w-full bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white font-mono">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-950/40 border border-purple-800 p-4 rounded-lg text-gray-200 text-sm space-y-2">
+                        <p>"Perfect, everything looks great."</p>
+                        <p>"I’m now going to connect you with a licensed agent contracted directly with <span class="text-purple-400 font-bold" id="script-final-carrier">[CARRIER]</span>."</p>
+                        <p class="text-xs text-yellow-400 font-medium">"Please grab a pen because they’ll provide your policy number at the end of the call."</p>
+                        <p>"It’s been a pleasure helping you today, <span class="text-blue-400 uppercase font-mono font-bold" id="script-final-client">[Client]</span>. Stay on the line for me."</p>
+                    </div>
+
+                    <button onclick="window.print()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded transition-colors shadow text-center uppercase tracking-wider">
+                        🚀 Complete Application Log / Print
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right 1 Column: Sticky Profile Data Summary View -->
+        <div class="lg:col-span-1">
+            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 sticky top-24 shadow-md space-y-4">
+                <h3 class="text-xs font-bold tracking-widest uppercase text-gray-400 border-b border-gray-700 pb-2">Live Application Data</h3>
+                
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="text-gray-500 block uppercase">Client Profile Target</span>
+                        <span id="summary-path" class="text-white font-medium italic">Pending Selection...</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block uppercase">Callback Number</span>
+                        <span id="summary-phone" class="text-white font-mono">-</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block uppercase">State Context</span>
+                        <span id="summary-state" class="text-white font-medium">-</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block uppercase">Target Budget Range</span>
+                        <span id="summary-budget" class="text-amber-400 font-medium">-</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block uppercase">Beneficiary Designation</span>
+                        <span id="summary-bene" class="text-white">-</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block uppercase">Selected Quote Structure</span>
+                        <span id="summary-quote" class="text-green-400 font-mono font-bold">-</span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 rounded p-2 text-[11px] text-gray-400 border border-gray-700">
+                    <span class="text-white block font-semibold mb-1">Core Health Flags:</span>
+                    <span id="summary-med-status" class="italic">No flags verified yet</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- UI Interaction Logic -->
+    <script>
+        // Real-time Event Hook Listening 
+        document.getElementById('input-phone').addEventListener('input', function(e) {
+            document.getElementById('script-phone-display').innerText = e.target.value || "[NUMBER]";
+            document.getElementById('summary-phone').innerText = e.target.value || "-";
+        });
+
+        document.getElementById('input-state').addEventListener('input', function(e) {
+            const state = e.target.value || "[State]";
+            document.getElementById('script-state-display').innerText = state;
+            document.getElementById('reb-state').innerText = state;
+            document.getElementById('summary-state').innerText = state;
+        });
+
+        document.getElementById('input-cost-amount').addEventListener('input', function(e) {
+            document.getElementById('reb-cost').innerText = e.target.value || "[AMOUNT]";
+        });
+
+        document.getElementById('input-beneficiary').addEventListener('input', function(e) {
+            const val = e.target.value || "[Beneficiary]";
+            document.getElementById('script-bene-display').innerText = val;
+            document.getElementById('summary-bene').innerText = val;
+        });
+
+        document.getElementById('custom-budget').addEventListener('input', function(e) {
+            selectBudget(e.target.value);
+        });
+
+        function selectPath(path) {
+            // Reset dynamic layout states
+            document.getElementById('step-2-self').classList.add('hidden');
+            document.getElementById('step-2-loved-one').classList.add('hidden');
+            
+            if(path === 'self') {
+                document.getElementById('step-2-self').classList.remove('hidden');
+                document.getElementById('summary-path').innerText = "Self-Coverage Intent";
+                document.getElementById('step-2-self').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('step-2-loved-one').classList.remove('hidden');
+                document.getElementById('summary-path').innerText = "Third-Party / Loved One";
+                document.getElementById('step-2-loved-one').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function setExistingInsurance(hasInsurance) {
+            document.getElementById('step-3-existing').classList.add('hidden');
+            document.getElementById('step-3-clean').classList.add('hidden');
+
+            if(hasInsurance) {
+                document.getElementById('step-3-existing').classList.remove('hidden');
+                document.getElementById('step-3-existing').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('step-3-clean').classList.remove('hidden');
+                document.getElementById('step-3-clean').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function showQualifying() {
+            document.getElementById('step-4-qualifying').classList.remove('hidden');
+            document.getElementById('step-4-qualifying').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleBankInput() {
+            const status = document.getElementById('input-checking').value;
+            const element = document.getElementById('bank-name-wrapper');
+            if (status === 'Yes') {
+                element.classList.remove('opacity-50');
+                document.getElementById('input-bank').disabled = false;
+            } else {
+                element.classList.add('opacity-50');
+                document.getElementById('input-bank').disabled = true;
+            }
+        }
+
+        function showBurial() {
+            document.getElementById('step-5-burial').classList.remove('hidden');
+            document.getElementById('step-5-burial').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleCostRebuttal(show) {
+            const box = document.getElementById('cost-rebuttal-box');
+            if(show) {
+                box.classList.remove('hidden');
+            } else {
+                box.classList.add('hidden');
+            }
+        }
+
+        function showBudget() {
+            document.getElementById('step-6-budget').classList.remove('hidden');
+            document.getElementById('step-6-budget').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectBudget(val) {
+            document.getElementById('script-budget-target').innerText = val;
+            document.getElementById('summary-budget').innerText = val;
+        }
+
+        function showHealth() {
+            // Process medical input data to capture immediate context reflection
+            const notes = document.getElementById('input-medical').value;
+            if(notes) document.getElementById('summary-med-status').innerText = notes;
+            
+            document.getElementById('step-7-health').classList.remove('hidden');
+            document.getElementById('step-7-health').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showClosing() {
+            document.getElementById('step-8-close').classList.remove('hidden');
+            document.getElementById('step-8-close').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateCloseScript() {
+            const carrier = document.getElementById('input-carrier').value || "[CARRIER]";
+            const face = document.getElementById('input-face').value || "[FACE AMOUNT]";
+            const price = document.getElementById('input-price').value || "[PRICE]";
+
+            document.getElementById('script-carrier-name').innerText = carrier;
+            document.getElementById('script-face-val').innerText = face;
+            document.getElementById('script-price-val').innerText = price;
+            
+            document.getElementById('script-final-carrier').innerText = carrier;
+            
+            document.getElementById('summary-quote').innerText = `${carrier} - $${face} Face @ $${price}/mo`;
+        }
+
+        function showPayment() {
+            document.getElementById('step-9-payment').classList.remove('hidden');
+            document.getElementById('step-9-payment').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
