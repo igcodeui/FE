@@ -167,30 +167,42 @@
                     <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full">Step 4</span>
                     <h2 class="text-lg font-semibold text-white">Qualifying Metrics</h2>
                 </div>
-                <p class="text-sm text-gray-400 mb-4"><strong>Agent:</strong> Are you married?<br>Do you have childern or anyone who depends on you financially?<br>The reason I ask is because life insurance isn;t really for us - its for the people we leave behind. </p>
+                <p class="text-sm text-gray-400 mb-4"><strong>Agent:</strong> Are you married?<br>Do you have childern or anyone who depends on you financially?<br>The reason I ask is because life insurance isn;t really for us - its for the people we leave behind.:</p>
                 <p class="text-sm text-gray-400 mb-4"><strong>Agent:</strong> To see what programs you qualify for, I just need to get some basic information:</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Date of Birth</label>
+                        <input type="date" id="input-dob" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Height / Weight</label>
+                        <input type="text" id="input-ht-wt" placeholder="e.g. 5'10 / 180 lbs" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Any Major Medical Conditions?</label>
+                        <textarea id="input-medical" placeholder="Heart disease, stroke, cancer, diabetes, etc..." rows="2" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white"></textarea>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Tobacco / Nicotine Use?</label>
+                        <select id="input-tobacco" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Employment / Occupation</label>
+                        <input type="text" id="input-work" placeholder="Working, Retired, Disability..." class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Rough Monthly Income</label>
+                        <input type="text" id="input-income" placeholder="e.g. $3,500" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Checking Account Holder?</label>
+                        <select id="input-checking" onchange="toggleBankInput()" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-white">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                         </select>
                     </div>
                     <div id="bank-name-wrapper" class="md:col-span-2 bg-gray-950 p-3 rounded border border-gray-800">
